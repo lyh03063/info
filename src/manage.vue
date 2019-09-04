@@ -70,23 +70,10 @@ export default {
           title: "基础数据",
           menuItem: [
             { index: "list_piece", route: "/list_piece", title: "片段" },
-            {
-              index: "list_franchisee",
-              route: "/list_franchisee",
-              title: "加盟商"
-            },
-            { index: "list_match", route: "/list_match", title: "赛事" },
-            {
-              index: "list_enroll",
-              route: "/list_enroll",
-              title: "报名(订单)"
-            },
-            {
-              index: "list_achievement",
-              route: "/list_achievement",
-              title: "比赛成绩"
-            },
-            { index: "list_member", route: "/list_member", title: "会员" }
+            { index: "list_group", route: "/list_group", title: "组" },
+            { index: "list_url", route: "/list_url", title: "网址" },
+            { index: "list_file", route: "/list_file", title: "文件" },
+           
           ]
         },
         {
@@ -94,11 +81,7 @@ export default {
           icon: "el-icon-document",
           title: "其他数据",
           menuItem: [
-            {
-              index: "list_area",
-              route: "/list_area",
-              title: "地区管理"
-            },
+            
             {
               index: "list_article_category",
               route: "/list_article_category",
@@ -108,48 +91,10 @@ export default {
               index: "list_article",
               route: "/list_article",
               title: "文章管理"
-            },
-            {
-              index: "list_recommend",
-              route: "/list_recommend",
-              title: "首页轮播图"
             }
           ]
         },
-        {
-          index: "3",
-          icon: "el-icon-setting",
-          title: "赛事赞助",
-          menuItem: [
-            {
-              index: "list_sponsor",
-              route: "/list_sponsor",
-              title: "赞助商"
-            },
-            {
-              index: "list_sponsorship",
-              route: "/list_sponsorship",
-              title: "赛事赞助"
-            }
-          ]
-        },
-        {
-          index: "4",
-          icon: "el-icon-setting",
-          title: "互动",
-          menuItem: [
-            {
-              index: "list_msg",
-              route: "/list_msg",
-              title: "消息"
-            },
-            {
-              index: "list_msg_read",
-              route: "/list_msg_read",
-              title: "消息已读记录"
-            }
-          ]
-        },
+       
         {
           index: "5",
           icon: "el-icon-setting",

@@ -1,12 +1,6 @@
 
 
-window.PUB={}
 
-window.PUB.domain="http://localhost:3000"
-//window.PUB.domain='http://test.dmagic.cn'
-// window.PUB.domain="http://e6234kn.hn3.mofasuidao.cn"//魔法隧道地址
- //window.PUB.domain="http://120.76.160.41:3000"
-window.PUB.urlUpload=`${PUB.domain}/api_third_part/qiniu_upload?scope=tangball` 
 
 let deepCopy = function (obj) {//深拷贝一个Json对象的函数
   let str = JSON.stringify(obj);//json对象转字符串
@@ -150,6 +144,30 @@ async function ajaxPopulate(populateConfig) {
 
 }
 
+
+let moveData = function (index, type, list) { //函数：{数据移动函数}-注意调用对象的KEY等配置
+    list = list || this[this.KEY.arrRelate];//KEY配置相关数组
+
+    let objIndex = {
+        "up": index - 1,
+        "down": index + 1,
+        "top": 0,
+        "bottom": list.length,
+
+    }
+
+
+    if ((type == "up" || type == "top") && index < 1) { //如果已到最上
+        return alert("已到最上");
+    } else if ((type == "down" || type == "bottom") && index >= list.length - 1) { //如果已到最上
+        return alert("已到最底");
+    }
+
+    let doc = list[index]
+    list.splice(index, 1); //先删除
+    list.splice(objIndex[type], 0, doc); //再插入
+};
+
 export default {
-  deepCopy, type, timeout, getTimeStatus, ajaxPopulate
+  deepCopy, type, timeout, getTimeStatus, ajaxPopulate,moveData
 }

@@ -21,6 +21,8 @@ window.ajax = ajax;
 import moment from "moment";
 window.moment = moment; 
 // import  "./assets/js/mix.js";//注意位置要提前
+import config from "@/assets/js/config.js";
+
 
 import util from "@/assets/js/util.js";
 window.util = util; 
@@ -39,29 +41,18 @@ import "./mock.js";
 import login from "@/login";
 import manage from "@/manage";
 import listHome from "@/page/listHome";
-import listCategory from "@/page/listCategory";
-import listCommodity from "@/page/listCommodity";
 
 
 
 import list_lyh from "@/page/list_lyh";
 import list_piece from "@/page/list_piece";
+import list_file from "@/page/list_file";
+import list_group from "@/page/list_group";
+import list_url from "@/page/list_url";
 
-import list_venue from "@/page/list_venue";
-import list_franchisee from "@/page/list_franchisee";
-import list_match from "@/page/list_match";
-import list_enroll from "@/page/list_enroll";
-import list_achievement from "@/page/list_achievement";
-import list_member from "@/page/list_member";
-import list_sponsor from "@/page/list_sponsor";
-import list_sponsorship from "@/page/list_sponsorship";
+
 import list_article_category from "@/page/list_article_category";
 import list_article from "@/page/list_article";
-import list_admin from "@/page/list_admin";
-import list_area from "@/page/list_area";
-import list_msg from "@/page/list_msg";
-import list_msg_read from "@/page/list_msg_read";
-import list_recommend from "@/page/list_recommend";
 import dynamic_form_demo from "@/page/dynamic_form_demo";
 import demo_common from "@/demo/common.vue";
 
@@ -83,37 +74,18 @@ const router = new VueRouter({
           component: list_piece
         },
         {
-          path: '/list_venue',
-          component: list_venue
+          path: '/list_group',
+          component: list_group
         },
         {
-          path: '/list_franchisee',
-          component: list_franchisee 
+          path: '/list_url',
+          component: list_url
         },
         {
-          path: '/list_match',
-          component: list_match
+          path: '/list_file',
+          component: list_file
         },
-        {
-          path: '/list_enroll',
-          component: list_enroll
-        },
-        {
-          path: '/list_achievement',
-          component: list_achievement
-        },
-        {
-          path: '/list_member',
-          component: list_member
-        },
-        {
-          path: '/list_sponsor',
-          component: list_sponsor
-        },
-        {
-          path: '/list_sponsorship',
-          component: list_sponsorship
-        },
+      
         {
           path: '/list_article_category',
           component: list_article_category
@@ -122,39 +94,12 @@ const router = new VueRouter({
           path: '/list_article',
           component: list_article
         },
-        {
-          path: '/list_area',
-          component: list_area
-        },
-        {
-          path: '/list_admin',
-          component: list_admin
-        },
-        {
-          path: '/list_msg',
-          component: list_msg
-        },
-        {
-          path: '/list_msg_read',
-          component: list_msg_read
-        },
+        
         {
           path: '/listHome',
           component: listHome
         },
-        {
-          path: '/listCommodity',
-          component: listCommodity
-        },
-        {
-          path: '/listCategory',
-          component: listCategory,
-        },
-        {
-          path: '/list_recommend',
-          component: list_recommend
-        },
-      
+       
        
         
         {
