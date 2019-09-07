@@ -3,7 +3,7 @@
     <div class="dialog-cover"></div>
     <div class="login-father-box" v-show="ak47">
       <div class="login-box">
-        <h1>唐球后台管理登录</h1>
+        <h1>后台登录</h1>
         <h2>管理员登录</h2>
         <el-form
           :model="ruleForm"

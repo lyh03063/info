@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      cfList: PUB.listCF.piece
+      cfList: PUB.listCF.info_piece
     };
   }
 };

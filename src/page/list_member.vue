@@ -1,17 +1,18 @@
 <template>
   <div class>
-    <dm_list_data :cf="cfList"></dm_list_data>
+    <dm_list_data :cf="cfList">
+      
+    </dm_list_data>
   </div>
 </template>
 <script>
+
 export default {
   components: {},
-  methods: {
-    
-  },
+  methods: {},
   data() {
     return {
-      cfList: PUB.listCF.info_url
+      cfList: PUB.listCF.info_member
     };
   }
 };

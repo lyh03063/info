@@ -7,11 +7,11 @@
 export default {
   components: {},
   methods: {
-    
+  
   },
   data() {
     return {
-      cfList: PUB.listCF.info_url
+      cfList: PUB.listCF.info_task
     };
   }
 };

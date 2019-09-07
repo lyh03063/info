@@ -70,22 +70,22 @@ export default {
           title: "基础数据",
           menuItem: [
             { index: "list_piece", route: "/list_piece", title: "片段" },
-            { index: "list_group", route: "/list_group", title: "组" },
+            { index: "list_group", route: "/list_group", title: "分组" },
             { index: "list_url", route: "/list_url", title: "网址" },
             { index: "list_file", route: "/list_file", title: "文件" },
-           
+            { index: "list_member", route: "/list_member", title: "会员" },
           ]
         },
         {
           index: "2",
           icon: "el-icon-document",
-          title: "其他数据",
+          title: "任务系统",
           menuItem: [
             
             {
-              index: "list_article_category",
-              route: "/list_article_category",
-              title: "文章分类"
+              index: "list_task",
+              route: "/list_task",
+              title: "任务"
             },
             {
               index: "list_article",

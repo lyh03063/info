@@ -7,7 +7,10 @@
 Vue.config.productionTip = false
 
 import lodash from 'lodash'//导入lodash方法库
-window.lodash=lodash
+window.lodash = lodash
+Vue.prototype.$lodash = lodash//让vue实例中可访问$lodash
+
+
 import axios from "axios";
 window.axios = axios;
 
@@ -19,13 +22,13 @@ window.ajax = ajax;
 
 
 import moment from "moment";
-window.moment = moment; 
+window.moment = moment;
 // import  "./assets/js/mix.js";//注意位置要提前
 import config from "@/assets/js/config.js";
 
 
 import util from "@/assets/js/util.js";
-window.util = util; 
+window.util = util;
 
 
 
@@ -39,6 +42,11 @@ import "./mock.js";
 
 
 import login from "@/login";
+import group_detail from "@/group_detail";
+import piece_detail from "@/piece_detail";
+
+
+
 import manage from "@/manage";
 import listHome from "@/page/listHome";
 
@@ -49,7 +57,8 @@ import list_piece from "@/page/list_piece";
 import list_file from "@/page/list_file";
 import list_group from "@/page/list_group";
 import list_url from "@/page/list_url";
-
+import list_task from "@/page/list_task";
+import list_member from "@/page/list_member";
 
 import list_article_category from "@/page/list_article_category";
 import list_article from "@/page/list_article";
@@ -64,6 +73,15 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/login' },
     { path: '/login', component: login },
+    {
+      path: '/group_detail', component: group_detail, children: [//子路由
+        {
+          path: '/piece_detail',
+          component: piece_detail
+        },
+     
+      ]
+    },
     {
       path: '/manage',
       component: manage,
@@ -85,28 +103,31 @@ const router = new VueRouter({
           path: '/list_file',
           component: list_file
         },
-      
         {
-          path: '/list_article_category',
-          component: list_article_category
+          path: '/list_task',
+          component: list_task
+        },
+        {
+          path: '/list_member',
+          component: list_member
         },
         {
           path: '/list_article',
           component: list_article
         },
-        
+
         {
           path: '/listHome',
           component: listHome
         },
-       
-       
-        
+
+
+
         {
           path: '/list_lyh',
           component: list_lyh
         },
-       
+
         {
           path: '/dynamic_form_demo',
           component: dynamic_form_demo
@@ -115,7 +136,7 @@ const router = new VueRouter({
           path: '/demo_common',
           component: demo_common
         },
-        
+
       ]
     },
   ]
@@ -129,21 +150,21 @@ const router = new VueRouter({
 
 const store = new Vuex.Store({//定义Vuex的存储对象
   state: {
-    debug:false,
+    debug: false,
     activeMenuIndex: "",//当前激活的菜单index
     listState: {//存放列表的共享状态，
 
-    }, 
+    },
     defultFindJson: {//存放列表的默认查询参数，
       // list_article:{articleCategory:3  }
 
-    },   
+    },
   },
- 
+
   mutations: {//变更事件
     setDebug(state, param) {//设置debug模式
-      state.debug= param;
-      
+      state.debug = param;
+
     },
     setListFindJson(state, param) {//设置列表的初始筛选参数值
       state.defultFindJson[param.listIndex] = param.findJson;
