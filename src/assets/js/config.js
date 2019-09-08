@@ -512,7 +512,9 @@ PUB.listCF.info_task = {
       prop: "complete",
       width: 80,
       formatter: function (row) {
-        return PUB.formatterDict("complete", row.complete);//调用：{获取数据字典值函数}
+      if (PUB.dict.complete[row.complete]) {
+        return PUB.dict.complete[row.complete].label;
+      }
       }
     },
 
