@@ -7,7 +7,7 @@
       </template>
  <!--查看分组详情列插槽组件-->
       <template v-slot:slot_column_name="{row}">
-       <a  target="_blank"  :href="'/#/group_detail?groupId='+row.P1">{{row.name}}</a>
+       <a  target="_blank"  :href="'#/group_detail?groupId='+row.P1">{{row.name}}</a>
       </template>
     </dm_list_data>
   </div>

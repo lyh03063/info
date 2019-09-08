@@ -2,7 +2,7 @@
   <div class="main">
     
     <div class="TAC">
-      <space height="80"></space>
+      <dm_space height="80"></dm_space>
       <div class="home-box">
         <h1 class="FS24 home-head">欢迎使用信息管理系统</h1>
         <div class="remark-box">
@@ -26,7 +26,7 @@
 .home-box{
   padding-top:20px;
   margin-top:50px;
-  background-color: rgb(230, 230, 230);
+  // background-color: rgb(230, 230, 230);
   width: 30%;
   margin-left: 30%;
   border-radius: 20px;

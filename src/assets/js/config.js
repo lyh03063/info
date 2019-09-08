@@ -924,7 +924,7 @@ PUB.listCF.info_member = {
 
 
 
-//#region 批量生产简化版的列表配置，用于collection
+//#region 批量拼装简化版的列表配置，用于collection
 
 
 

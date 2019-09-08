@@ -53,8 +53,7 @@
         </li>
       </ul>
 
-
- <!--任务-->
+      <!--任务-->
       <div class v-else-if="listType=='table'">
         <dm_list_data
           ref="listDataMain"
@@ -65,12 +64,7 @@
         ></dm_list_data>
       </div>
 
-      <div
-        class="data-group2"
-        v-for="(doc,i) in dataList"
-        :key="i"
-        v-else
-      >
+      <div class="data-group2" v-for="(doc,i) in dataList" :key="i" v-else>
         <!--片段-->
         <a @click="gotoDetail(doc)" href="javascript:;" v-if="dataType=='info_piece'">{{doc.name}}</a>
         <!--网址-->
@@ -88,8 +82,6 @@
           v-else-if="dataType=='info_file'"
         >{{doc.name}}</a>
       </div>
-
-     
     </div>
     <!--新增数据弹窗-->
     <el-dialog
@@ -120,7 +112,12 @@
       v-bind:visible.sync="showDialogList"
       v-if="showDialogList"
     >
-      <dm_list_data :cf="cfList" ref="listData"></dm_list_data>
+      <dm_list_data :cf="cfList" ref="listData">
+        <!--分组-查看分组详情列插槽组件-->
+        <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">
+          {{row.name}}
+        </template>
+      </dm_list_data>
       <div class="TAC">
         <el-button type="primary" @click="selectData">确定</el-button>
       </div>
@@ -133,10 +130,9 @@
 export default {
   mixins: [MIX.form_item], //混入
   //groupId不传的话，不启动独立的数据保存
-  props: ["dataType", "groupId","listType"],
+  props: ["dataType", "groupId", "listType"],
   data() {
     return {
-     
       cfDataList: lodash.get(PUB, `listCF.${this.dataType}_simple`), //表格型数据列表配置
       isEdit: false, //是否开启编辑
       page: null, //页面类型
@@ -177,8 +173,7 @@ export default {
       },
       immediate: true,
       deep: true
-    },
-   
+    }
   },
   computed: {},
 
@@ -298,7 +293,7 @@ export default {
      * @name ajax获取对应列表数据函数
      */
     ajaxGetList: async function() {
-      if (!(this.valueNeed )) return;
+      if (!this.valueNeed) return;
       let arrId = this.valueNeed.map(doc => doc.id);
       //Q1:表格形式
       if (this.listType == "table") {
@@ -307,8 +302,8 @@ export default {
 
         //如果{主列表}存在
         if (this.$refs.listDataMain) {
-          this.$refs.listDataMain.Objparam.findJson = this.cfDataList.findJsonDefault;//修改筛选参数
-          this.$refs.listDataMain.getDataList()//更新列表
+          this.$refs.listDataMain.Objparam.findJson = this.cfDataList.findJsonDefault; //修改筛选参数
+          this.$refs.listDataMain.getDataList(); //更新列表
         }
 
         //Q2:{其他列表}
