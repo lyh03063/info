@@ -3,8 +3,8 @@ import lodash from 'lodash'//导入lodash方法库
 
 window.PUB = {}
 
-//PUB.domain = "http://localhost:3000"
-PUB.domain='http://test.dmagic.cn'
+PUB.domain = "http://localhost:3000"
+//PUB.domain='http://test.dmagic.cn'
 // PUB.domain="http://e6234kn.hn3.mofasuidao.cn"//魔法隧道地址
 //PUB.domain="http://120.76.160.41:3000"
 
@@ -234,12 +234,12 @@ PUB.listCF.info_file = {
     {
       label: "编号",
       prop: "P1",
-      width: 100
+      width: 70
     },
     {
       label: "标题",
       prop: "name",
-      width: 120
+      width: 320
     },
     {
       label: "说明",
@@ -286,11 +286,7 @@ PUB.listCF.info_file = {
       prop: "name",
       type: "input"
     },
-    {
-      label: "内容",
-      prop: "content",
-      type: "editor"
-    },
+ 
     {
       label: "说明",
       prop: "desc",

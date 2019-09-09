@@ -71,7 +71,7 @@
         <a :href="doc.url" target="_blank" v-else-if="dataType=='info_url'">{{doc.name}}</a>
         <!--分组-->
         <a
-          :href="'/#/group_detail?groupId='+doc.P1"
+          :href="'#/group_detail?groupId='+doc.P1"
           target="_blank"
           v-else-if="dataType=='info_group'"
         >{{doc.name}}</a>
