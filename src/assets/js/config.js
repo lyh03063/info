@@ -88,7 +88,7 @@ PUB.formatterDict = function (dictName, value) {
 
 PUB.listCF = {}
 
-let arrPageName = ["info_group", "info_file", "info_url", "info_piece", "info_task","info_member",]
+let arrPageName = ["info_group", "info_file", "info_url", "info_piece", "info_task","info_member","info_relation",]
 
 //页面对应的集合列表类型
 PUB.collectionType={
@@ -99,6 +99,110 @@ PUB.collectionType={
   "info_task":"table",
 
 }
+
+
+//#region info_relation
+PUB.listCF.info_relation = {
+  listIndex: "list_relation", //vuex对应的字段
+  focusMenu: true, //进行菜单聚焦
+  twoTitle: "基础",
+  threeTitle: "片段",
+  flag: true,
+  url: {
+    list: "/crossList?page=info_relation", //列表接口
+    add: "/crossAdd?page=info_relation", //新增接口
+    modify: "/crossModify?page=info_relation", //修改接口
+    detail: "/crossDetail?page=info_relation", //详情接口
+    delete: "/crossDelete?page=info_relation" //删除接口
+  },
+  //-------列配置数组-------
+  columns: [
+    {
+      label: "编号",
+      prop: "P1",
+      width: 70
+    },
+    {
+      label: "分组id",
+      prop: "groupId",
+      width: 80
+    },
+    {
+      label: "数据id",
+      prop: "dataId",
+      width: 80
+    },
+    {
+      label: "数据类型",
+      prop: "dataType",
+      width: 110
+    },
+    {
+      label: "序号",
+      prop: "sort",
+      width: 80
+    }
+  ],
+  //-------筛选表单字段数组-------
+  searchFormItems: [
+    {
+      label: "编号",
+      prop: "P1",
+      type: "input"
+    },
+    {
+      label: "分组id",
+      prop: "groupId",
+    },
+    {
+      label: "数据id",
+      prop: "dataId",
+    },
+  ],
+  //-------详情字段数组-------
+  detailItems: [
+    {
+      label: "编号",
+      prop: "P1"
+    },
+    {
+      label: "分组id",
+      prop: "groupId",
+    },
+    {
+      label: "数据id",
+      prop: "dataId",
+    },
+  ],
+  //-------新增、修改表单字段数组-------
+  formItems: [
+    {
+      label: "标题",
+      prop: "name",
+      type: "input"
+    },
+    {
+      label: "分组id",
+      prop: "groupId",
+    },
+    {
+      label: "数据id",
+      prop: "dataId",
+    },
+
+    {
+      label: "数据类型",
+      prop: "dataType",
+    },
+    {
+      label: "序号",
+      prop: "sort",
+    }
+  ]
+};
+//#endregion
+
+
 
 
 //#region info_group
@@ -941,6 +1045,47 @@ arrPageName.forEach(page => {//循环：{页面数组}
 })
 
 
+//#region info_relation_simple处理
+PUB.listCF.info_relation_simple.columns= [
+  {
+    label: "编号",
+    prop: "P1",
+    width: 70
+  },
+  
+  {
+    label: "数据id",
+    prop: "dataId",
+    width: 80
+  },
+  {
+    label: "标题1",
+    prop: "doc",
+    width: 320,
+    slot: "slot_column_name"
+  },
+  // {
+  //   label: "数据类型",
+  //   prop: "dataType",
+  //   width: 110
+  // },
+  {
+    label: "序号",
+    prop: "sort",
+    width: 80
+  },
+  {
+    label: "操作实体数据",
+    prop: "abc",
+    slot: "slot_column_operate"
+  },
+]
+
+
+
+
+
+//#endregion
 
 
 

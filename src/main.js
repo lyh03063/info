@@ -43,6 +43,7 @@ Vue.use(VueRouter)
 
 import login from "@/login";
 import group_detail from "@/group_detail";
+import group_detail2 from "@/group_detail2";
 import piece_detail from "@/piece_detail";
 
 
@@ -59,6 +60,7 @@ import list_group from "@/page/list_group";
 import list_url from "@/page/list_url";
 import list_task from "@/page/list_task";
 import list_member from "@/page/list_member";
+import list_relation from "@/page/list_relation";
 
 import list_article_category from "@/page/list_article_category";
 import list_article from "@/page/list_article";
@@ -79,8 +81,12 @@ const router = new VueRouter({
           path: '/piece_detail',
           component: piece_detail
         },
-     
-      ]
+
+      ],
+
+    },
+    {
+      path: '/group_detail2', component: group_detail2,
     },
     {
       path: '/manage',
@@ -110,6 +116,10 @@ const router = new VueRouter({
         {
           path: '/list_member',
           component: list_member
+        },
+        {
+          path: '/list_relation',
+          component: list_relation
         },
         {
           path: '/list_article',

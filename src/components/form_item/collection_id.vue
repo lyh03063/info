@@ -277,7 +277,6 @@ export default {
      */
 
     dialogList: function() {
-      // alert("dialogAddData");
       this.showDialogList = true;
     },
     /**
