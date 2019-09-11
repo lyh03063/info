@@ -7,7 +7,7 @@
 export default {
   components: {},
   methods: {
-  
+   
   },
   data() {
     return {
