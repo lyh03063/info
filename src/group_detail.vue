@@ -27,8 +27,7 @@
         :group-id="groupDoc.P1"
         v-if="ready"
         @after-add="afterAddData"
-        @after-delete="refreshList"
-        @after-modify="refreshList"
+      
       ></collection_id>
     </div>
   </div>

@@ -663,7 +663,8 @@ PUB.listCF.info_task = {
       label: "优先级",
       prop: "prior",
       type: "select",
-      options: PUB.objDictArr.prior
+      options: PUB.objDictArr.prior,
+      multiple:true,//多选
     },
     {
 
@@ -682,6 +683,7 @@ PUB.listCF.info_task = {
       label: "完成度",
       prop: "complete",
       type: "select",
+      multiple:true,//多选
 
       options: PUB.objDictArr.complete
 

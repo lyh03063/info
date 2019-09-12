@@ -59,8 +59,8 @@
           ref="listDataMain"
           :cf="cfDataList"
           @after-add="(data)=>{$emit('after-add',data)}"
-          @after-modify="(data)=>{$emit('after-modify',data)}"
-          @after-delete="$emit('after-delete')"
+          @after-modify="ajaxGetList"
+          @after-delete="ajaxGetList"
         ></dm_list_data>
       </div>
 
@@ -114,9 +114,7 @@
     >
       <dm_list_data :cf="cfList" ref="listData">
         <!--分组-查看分组详情列插槽组件-->
-        <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">
-          {{row.name}}
-        </template>
+        <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
       </dm_list_data>
       <div class="TAC">
         <el-button type="primary" @click="selectData">确定</el-button>
@@ -301,7 +299,12 @@ export default {
 
         //如果{主列表}存在
         if (this.$refs.listDataMain) {
-          this.$refs.listDataMain.Objparam.findJson = this.cfDataList.findJsonDefault; //修改筛选参数
+          // this.$refs.listDataMain.Objparam.findJson = this.cfDataList.findJsonDefault; //修改筛选参数
+          Object.assign(
+            this.$refs.listDataMain.Objparam.findJson,
+            this.cfDataList.findJsonDefault
+          ); //合并对象
+
           this.$refs.listDataMain.getDataList(); //更新列表
         }
 

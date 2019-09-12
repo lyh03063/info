@@ -194,6 +194,9 @@ export default {
     this.cfList.findJsonDefault = { groupId: this.groupId };
     this.cfList.sortJsonDefault = { sort: -1 };
 
+     this.cfList.searchFormItems = PUB.listCF[`${this.dataType}`].searchFormItems;
+
+//配置动态数据字典
     this.cfList.dynamicDict = [
       {
         page: "info_piece",
