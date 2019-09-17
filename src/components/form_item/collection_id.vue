@@ -53,7 +53,7 @@
         </li>
       </ul>
 
-      <!--任务-->
+      <!--主列表dm_list_data-->
       <div class v-else-if="listType=='table'">
         <dm_list_data
           ref="listDataMain"
@@ -61,7 +61,16 @@
           @after-add="(data)=>{$emit('after-add',data)}"
           @after-modify="ajaxGetList"
           @after-delete="ajaxGetList"
-        ></dm_list_data>
+        >
+         <!--分组-查看分组详情列插槽组件-->
+        <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
+        <!--任务-完成度列插槽组件-->
+        <template v-slot:slot_column_complete="{row}" v-if="dataType=='info_task'">
+         
+          <el-progress :text-inside="true" :stroke-width="16" :percentage="(row.complete||0)*100" status="success"></el-progress>
+
+        </template>
+        </dm_list_data>
       </div>
 
       <div class="data-group2" v-for="(doc,i) in dataList" :key="i" v-else>
@@ -115,6 +124,11 @@
       <dm_list_data :cf="cfList" ref="listData">
         <!--分组-查看分组详情列插槽组件-->
         <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
+         <!--任务-完成度列插槽组件-->
+        <template v-slot:slot_column_complete="{row}" v-if="dataType=='info_task'">
+         <el-progress :text-inside="true" :stroke-width="16" :percentage="(row.complete||0)*100" status="success"></el-progress>
+
+        </template>
       </dm_list_data>
       <div class="TAC">
         <el-button type="primary" @click="selectData">确定</el-button>
@@ -131,7 +145,10 @@ export default {
   props: ["dataType", "groupId", "listType"],
   data() {
     return {
-      cfDataList: lodash.get(PUB, `listCF.${this.dataType}_simple`), //表格型数据列表配置
+      //深拷贝
+// var objB =lodash.cloneDeep(objA);  
+//  cfDataList: lodash.get(PUB, `listCF.${this.dataType}_simple`), //表格型数据列表配置
+      cfDataList: PUB.listCF[this.dataType+'_simple'], //表格型数据列表配置
       isEdit: false, //是否开启编辑
       page: null, //页面类型
       cfList: null, //选择数据列表配置

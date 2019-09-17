@@ -3,10 +3,10 @@ import lodash from 'lodash'//导入lodash方法库
 
 window.PUB = {}
 
-PUB.domain = "http://localhost:3000"
+//PUB.domain = "http://localhost:3000"
 //PUB.domain='http://test.dmagic.cn'
 // PUB.domain="http://e6234kn.hn3.mofasuidao.cn"//魔法隧道地址
-//PUB.domain="http://120.76.160.41:3000"
+PUB.domain="http://120.76.160.41:3000"
 
 PUB.urlUpload = `https://up-z2.qiniup.com`//七牛云上传地址（域名）
 PUB.urlGetQiniuToken = `${PUB.domain}/api_third_part/get_qiniu_token?scope=dmagic`
@@ -45,10 +45,15 @@ PUB.objDictArr = {
     { value: 0.9, label: "90%" },
     { value: 1, label: "100%" },
   ],
-
+  complete2: [
+    { value: 1, label: "未开始" },//complete==0
+    { value: 2, label: "进行中" },//complete>0&&complete>1
+    { value: 3, label: "已完成" },//complete>0&&complete>1
+   
+  ],
 }
 
-
+//{"P7": Im,"P5":{ $gte: DataStart,$lte: DataEnd } }
 
 
 
@@ -256,7 +261,7 @@ PUB.listCF.info_group = {
     {
       label: "组名",
       prop: "name",
-      type: "input"
+      type: "input_find_vague"
     }
   ],
   //-------详情字段数组-------
@@ -361,7 +366,7 @@ PUB.listCF.info_file = {
     {
       label: "标题",
       prop: "name",
-      type: "input"
+      type: "input_find_vague"
     }
   ],
   //-------详情字段数组-------
@@ -449,7 +454,7 @@ PUB.listCF.info_url = {
     {
       label: "标题",
       prop: "name",
-      type: "input"
+      type: "input_find_vague"
     }
   ],
   //-------详情字段数组-------
@@ -523,7 +528,7 @@ PUB.listCF.info_piece = {
     {
       label: "标题",
       prop: "name",
-      type: "input"
+      type: "input_find_vague"
     }
   ],
   //-------详情字段数组-------
@@ -552,7 +557,7 @@ PUB.listCF.info_piece = {
     {
       label: "内容",
       prop: "content",
-      type: "editor"
+      type: "editorTM"
     },
     {
       label: "相册",
@@ -580,6 +585,7 @@ PUB.listCF.info_task = {
   },
   //-------列配置数组-------
   columns: [
+
     {
       label: "编号",
       prop: "P1",
@@ -611,6 +617,7 @@ PUB.listCF.info_task = {
       label: "完成度",
       prop: "complete",
       width: 80,
+      slot: "slot_column_complete",
       formatter: function (row) {
       if (PUB.dict.complete[row.complete]) {
         return PUB.dict.complete[row.complete].label;
@@ -647,6 +654,25 @@ PUB.listCF.info_task = {
       }
     },
   ],
+   //-------筛选表单监听器-------
+  cfSearchForm: {
+    watch: {
+      a:124,
+      b:function(){},
+      //传入监听器
+      complete2:function(newVal, oldVal) {
+  
+        console.log("complete2变动");
+        let dict={
+          1: { "$eq": 0 },
+          2: { "$gt": 0, "$lt": 1 },
+          3: { "$eq": 1 }
+        }
+        this.value.complete = dict[newVal];
+       delete this.value.complete2;//*** */移除掉，否则会影响查询结果
+      }
+    }
+  },
   //-------筛选表单字段数组-------
   searchFormItems: [
     {
@@ -657,7 +683,7 @@ PUB.listCF.info_task = {
     {
       label: "标题",
       prop: "name",
-      type: "input"
+      type: "input_find_vague"
     },
     {
       label: "优先级",
@@ -679,13 +705,21 @@ PUB.listCF.info_task = {
       type: "select",
       options: PUB.objDictArr.taskType
     },
-    {
-      label: "完成度",
-      prop: "complete",
-      type: "select",
-      multiple:true,//多选
+    // {
+    //   label: "完成度",
+    //   prop: "complete",
+    //   type: "select",
+    //   multiple:true,//多选
 
-      options: PUB.objDictArr.complete
+    //   options: PUB.objDictArr.complete
+
+    // },
+    {
+      label: "完成情况",
+      prop: "complete2",
+      type: "select",
+      // multiple:true,//多选
+      options: PUB.objDictArr.complete2
 
     },
     {
@@ -763,72 +797,84 @@ PUB.listCF.info_task = {
   ],
   //-------新增、修改表单字段数组-------
   formItems: [
-    {
-      label: "标题",
-      prop: "name",
-      type: "input"
-    },
 
     {
-      label: "类型",
-      prop: "taskType",
-      type: "radio",
-      default: 1,
-      options: PUB.objDictArr.taskType
-    },
-    // {
-
-    //   label: "负责人",
-    //   prop: "person",
-    //   type: "input"
-    // },
-    {
-      label: "负责人",
-      prop: "person",
-      type: "select",
-      ajax: {
-        url: "/crossList?page=info_member",
-        keyLabel: "name",
-        keyValue: "user"
+      label: "",
+      // prop: "extend",
+      // default: { diycheckbox: [] },
+      cfForm: {
+        col_span: 12,//控制显示一行2列
+        formItems: [
+          {
+            label: "标题",
+            prop: "name",
+            type: "input"
+          },
+      
+          {
+            label: "类型",
+            prop: "taskType",
+            type: "radio",
+            default: 1,
+            options: PUB.objDictArr.taskType
+          },
+          // {
+      
+          //   label: "负责人",
+          //   prop: "person",
+          //   type: "input"
+          // },
+          {
+            label: "负责人",
+            prop: "person",
+            type: "select",
+            ajax: {
+              url: "/crossList?page=info_member",
+              keyLabel: "name",
+              keyValue: "user"
+            }
+          },
+          {
+            label: "完成度",
+            prop: "complete",
+            type: "slider",
+            default: 0,
+            options: PUB.objDictArr.complete
+      
+          },
+      
+          {
+            label: "预估耗时",
+            prop: "predictTime",
+            type: "input"
+          },
+          {
+            label: "实耗时",
+            prop: "actualTime",
+            type: "input"
+          },
+          {
+      
+            label: "难度",
+            prop: "difficulty",
+            type: "radio",
+            options: PUB.objDictArr.difficulty
+          },
+      
+          {
+            label: "优先级",
+            prop: "prior",
+            type: "radio",
+            options: PUB.objDictArr.prior
+          },
+        ]
       }
     },
-    {
-      label: "完成度",
-      prop: "complete",
-      type: "radio",
-      default: 0,
-      options: PUB.objDictArr.complete
-
-    },
-
-    {
-      label: "预估耗时",
-      prop: "predictTime",
-      type: "input"
-    },
-    {
-      label: "实耗时",
-      prop: "actualTime",
-      type: "input"
-    },
-    {
-
-      label: "难度",
-      prop: "difficulty",
-      type: "radio",
-      options: PUB.objDictArr.difficulty
-    },
-
-    {
-      label: "优先级",
-      prop: "prior",
-      type: "radio",
-      options: PUB.objDictArr.prior
-    },
+    
     {
       label: "内容",
       prop: "content",
-      type: "editor"
+      type: "editorTM"
     }
   ]
 };
