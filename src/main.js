@@ -44,6 +44,7 @@ Vue.use(VueRouter)
 import login from "@/login";
 import group_detail from "@/group_detail";
 import group_detail2 from "@/group_detail2";
+import group_detail3 from "@/group_detail3";
 import piece_detail from "@/piece_detail";
 
 
@@ -87,6 +88,14 @@ const router = new VueRouter({
     },
     {
       path: '/group_detail2', component: group_detail2,
+    },
+    {
+      path: '/group_detail3', component: group_detail3, children: [//子路由
+        {
+          path: '/group_detail',
+          component: group_detail
+        },
+      ],
     },
     {
       path: '/manage',

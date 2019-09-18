@@ -1,13 +1,13 @@
 <template>
   <div class="main-box">
-    <div class="clear breadcrumb-box">
+    <!-- <div class="clear breadcrumb-box">
       <el-breadcrumb separator="/">
-        <!-- :to="{ path: '/' }" -->
+       
         <el-breadcrumb-item v-for="(doc,i) in breadcrumblist" :key="i">
           <a :href="doc.path||'javascript:;'">{{doc.name}}</a>
         </el-breadcrumb-item>
       </el-breadcrumb>
-    </div>
+    </div> -->
 
     <dm_debug_list>
       <dm_debug_item v-model="groupId" text="当前分组Id" />
@@ -37,13 +37,14 @@
 import collection_id from "@/components/form_item/collection_id.vue";
 export default {
   components: { collection_id },
+  props:["groupIdProp"],
   data() {
     return {
       collectionListType: "table", //集合的列表形式，table或其他
       ready: false,
       breadcrumblist: [],
       activeNames: ["0"], //折叠面板的激活name数组
-      groupId: this.$route.query.groupId, //分组Id
+      groupId: this.groupIdProp||this.$route.query.groupId, //分组Id
       groupDoc: {}, //分组doc
       arrId: null, //id数组
       dataList: null, //id数组
@@ -96,6 +97,7 @@ export default {
      */
 
     ajaxGetList: async function() {
+      console.log("this.groupId####:", this.groupId);
       let { data } = await axios({
         //请求接口
         method: "post",
@@ -116,13 +118,14 @@ export default {
       if (!this.groupDoc.arrId) {
         this.groupDoc.arrId = [];
       }
-
+console.log("##########1");
       {
         this.arrId = this.groupDoc.arrId.map(doc => doc.id);
         if (!this.arrId.length) {
           //如果{000}000
           this.arrId = [];
         }
+console.log("##########2");
 
         let { data } = await axios({
           //请求接口
