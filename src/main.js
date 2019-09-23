@@ -27,8 +27,8 @@ window.moment = moment;
 import config from "@/assets/js/config.js";
 
 
-import util from "@/assets/js/util.js";
-window.util = util;
+// import util from "@/assets/js/util.js";
+// window.util = util;
 
 
 

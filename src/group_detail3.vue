@@ -19,9 +19,10 @@
         v-for="(item,index) in listMenu"
         :key="item.P1"
         @open="enterMenu"
+        @mouseenter.native="enterMenu(item,index)"
       >
         <template slot="title">
-          <span class @mouseenter="enterMenu(item,index)">{{item.name}}</span>
+          <span class>{{item.name}}</span>
         </template>
         <template v-if="item.sonMenu&&item.sonMenu.length">
           <el-menu-item
@@ -85,18 +86,18 @@ export default {
             findJson: { P1: { $in: arrId } }
           } //传递参数
         });
+        let { list } = data;
+     
 
-        item.sonMenu = data.list; //补充子菜单
+        item.sonMenu = util.sortByArrId({ list, arrId }); //调用：{根据id数组重排集合的函数}
+
         this.listMenu = lodash.cloneDeep(this.listMenu);
       }
-      console.log("enterMenu-3");
     },
     async handleSelect(key, keyPath) {
-      console.log("key:", key);
-      console.log("keyPath:", keyPath);
       this.ready = false;
       this.groupIdTarget = key;
-      await util.timeout(100); //延迟,这里需优化
+      await this.$nextTick();//延迟到视图更新
       this.ready = true;
     },
     /**
@@ -126,7 +127,8 @@ export default {
           } //传递参数
         });
 
-        this.listMenu = data.list;
+        // this.listMenu = data.list;
+        this.listMenu = util.sortByArrId({ list: data.list, arrId }); //调用：{根据id数组重排集合的函数}
       }
 
       this.ready = true;

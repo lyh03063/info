@@ -113,6 +113,7 @@ PUB.listCF.info_relation = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_relation", //列表接口
     add: "/crossAdd?page=info_relation", //新增接口
@@ -217,6 +218,7 @@ PUB.listCF.info_group = {
   twoTitle: "基础",
   threeTitle: "分组",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_group", //列表接口
     add: "/crossAdd?page=info_group", //新增接口
@@ -331,6 +333,7 @@ PUB.listCF.info_file = {
   twoTitle: "基础",
   threeTitle: "文件",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_file", //列表接口
     add: "/crossAdd?page=info_file", //新增接口
@@ -419,6 +422,7 @@ PUB.listCF.info_url = {
   twoTitle: "基础",
   threeTitle: "网址",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_url", //列表接口
     add: "/crossAdd?page=info_url", //新增接口
@@ -498,6 +502,7 @@ PUB.listCF.info_piece = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_piece", //列表接口
     add: "/crossAdd?page=info_piece", //新增接口
@@ -515,7 +520,7 @@ PUB.listCF.info_piece = {
     {
       label: "标题",
       prop: "name",
-      width: 320
+      width: 420
     }
   ],
   //-------筛选表单字段数组-------
@@ -583,6 +588,7 @@ PUB.listCF.info_task = {
     detail: "/crossDetail?page=info_task", //详情接口
     delete: "/crossDelete?page=info_task" //删除接口
   },
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   //-------列配置数组-------
   columns: [
 
@@ -594,7 +600,7 @@ PUB.listCF.info_task = {
     {
       label: "标题",
       prop: "name",
-      width: 330
+      width: 430
     },
     {
       label: "类型",
@@ -889,6 +895,7 @@ PUB.listCF.info_member = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
+  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_member", //列表接口
     add: "/crossAdd?page=info_member", //新增接口

@@ -3,7 +3,8 @@
     <div class>
       <el-button plain @click="dialogAddData" size="mini" v-if="isEdit">新增并引用</el-button>
       <el-button plain @click="dialogList" size="mini" v-if="isEdit">从已有数据引用</el-button>
-      <div class="FR MR10" v-if="groupId&&listType!='table'">
+      <!-- &&listType!='table' -->
+      <div class="FR MR10" v-if="groupId">
         <el-button plain @click="isEdit=true" size="mini" v-if="!isEdit">编辑</el-button>
         <el-button plain @click="isEdit=false" size="mini" v-if="isEdit">取消编辑</el-button>
         <el-button @click="saveData" size="mini" v-if="isEdit" type="primary">保存</el-button>
@@ -11,6 +12,7 @@
     </div>
 
     <dm_debug_list>
+      <dm_debug_item v-model="cfDataList" text="collection_id-cfDataList" />
       <dm_debug_item v-model="dictData" text="dictData" />
       <dm_debug_item v-model="dataList" text="dataList" />
       <dm_debug_item v-model="valueNeed" text="valueNeed" />
@@ -27,8 +29,9 @@
           @mouseenter="focusItem=i"
           @mouseleave="focusItem=999"
         >
-          <div class v-if="dictData[doc.id]">
-            <span>{{doc.id}}:{{dictData[doc.id].name}}</span>
+          <!-- v-if="dictData[doc.id]" -->
+          <div class>
+            <span>{{doc.id}}:{{ $lodash.get(dictData, `[${doc.id}].name`)}}</span>
             <div class="tool-bar" v-if="isEdit">
               <i class="el-icon-top btn-op" title="置顶" @click="move(i, 'top')" v-if="i>0"></i>
               <i class="el-icon-top btn-op" title="上移" @click="move(i, 'up')" v-if="i>0"></i>
@@ -62,14 +65,17 @@
           @after-modify="ajaxGetList"
           @after-delete="ajaxGetList"
         >
-         <!--分组-查看分组详情列插槽组件-->
-        <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
-        <!--任务-完成度列插槽组件-->
-        <template v-slot:slot_column_complete="{row}" v-if="dataType=='info_task'">
-         
-          <el-progress :text-inside="true" :stroke-width="16" :percentage="(row.complete||0)*100" status="success"></el-progress>
-
-        </template>
+          <!--分组-查看分组详情列插槽组件-->
+          <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
+          <!--任务-完成度列插槽组件-->
+          <template v-slot:slot_column_complete="{row}" v-if="dataType=='info_task'">
+            <el-progress
+              :text-inside="true"
+              :stroke-width="16"
+              :percentage="(row.complete||0)*100"
+              status="success"
+            ></el-progress>
+          </template>
         </dm_list_data>
       </div>
 
@@ -124,10 +130,14 @@
       <dm_list_data :cf="cfList" ref="listData">
         <!--分组-查看分组详情列插槽组件-->
         <template v-slot:slot_column_name="{row}" v-if="dataType=='info_group'">{{row.name}}</template>
-         <!--任务-完成度列插槽组件-->
+        <!--任务-完成度列插槽组件-->
         <template v-slot:slot_column_complete="{row}" v-if="dataType=='info_task'">
-         <el-progress :text-inside="true" :stroke-width="16" :percentage="(row.complete||0)*100" status="success"></el-progress>
-
+          <el-progress
+            :text-inside="true"
+            :stroke-width="16"
+            :percentage="(row.complete||0)*100"
+            status="success"
+          ></el-progress>
         </template>
       </dm_list_data>
       <div class="TAC">
@@ -146,9 +156,8 @@ export default {
   data() {
     return {
       //深拷贝
-// var objB =lodash.cloneDeep(objA);  
-//  cfDataList: lodash.get(PUB, `listCF.${this.dataType}_simple`), //表格型数据列表配置
-      cfDataList: PUB.listCF[this.dataType+'_simple'], //表格型数据列表配置
+      // var objB =lodash.cloneDeep(objA);
+      cfDataList: util.deepCopy(PUB.listCF[this.dataType + "_simple"]),
       isEdit: false, //是否开启编辑
       page: null, //页面类型
       cfList: null, //选择数据列表配置
@@ -262,11 +271,12 @@ export default {
     },
 
     /**
-     * @name 对dataList函数进行排序（根据arrId）的函数
+     * @name 对dataList函数进行排序（根据arrId）的函数,暂时不好取代
      */
 
     sortDataList: async function() {
       let dataListNew = []; //变量：{新数组}
+      console.log("this.valueNeed:", this.valueNeed);
       this.valueNeed.forEach(doc => {
         //循环：{新数组}
         dataListNew.push(this.dictData[doc.id]); //{新数组}追加元素
@@ -307,20 +317,23 @@ export default {
      * @name ajax获取对应列表数据函数
      */
     ajaxGetList: async function() {
+      console.log("ajaxGetList####");
       if (!this.valueNeed) return;
       let arrId = this.valueNeed.map(doc => doc.id);
       //Q1:表格形式
       if (this.listType == "table") {
         //任务列表配置添加默认查询条件****
         this.cfDataList.findJsonDefault = { P1: { $in: arrId } };
-
+        this.$set(this.cfDataList.objParamAddon, "sortByArrId", arrId); //***/强制更新属性
         //如果{主列表}存在
         if (this.$refs.listDataMain) {
-          // this.$refs.listDataMain.Objparam.findJson = this.cfDataList.findJsonDefault; //修改筛选参数
           Object.assign(
-            this.$refs.listDataMain.Objparam.findJson,
+            this.$refs.listDataMain.objParam.findJson,
             this.cfDataList.findJsonDefault
           ); //合并对象
+
+          //更新objParam.sortByArrId
+          // this.$refs.listDataMain.objParam.sortByArrId = arrId; //*** */
 
           this.$refs.listDataMain.getDataList(); //更新列表
         }
@@ -336,8 +349,8 @@ export default {
           } //传递参数
         });
 
+        // this.dataList = util.sortByArrId({ list:data.list, arrId }); //调用：{根据id数组重排集合的函数}
         this.dataList = data.list;
-
         this.dictData = lodash.keyBy(this.dataList, "P1");
         this.sortDataList(); //调用：{对dataList函数进行排序（根据arrId）的函数}
       }
