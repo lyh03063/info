@@ -4,9 +4,9 @@ import lodash from 'lodash'//导入lodash方法库
 window.PUB = {}
 
 //PUB.domain = "http://localhost:3000"
-//PUB.domain='http://test.dmagic.cn'
+PUB.domain='http://test.dmagic.cn'
 // PUB.domain="http://e6234kn.hn3.mofasuidao.cn"//魔法隧道地址
-PUB.domain="http://120.76.160.41:3000"
+// PUB.domain="http://120.76.160.41:3000"
 
 PUB.urlUpload = `https://up-z2.qiniup.com`//七牛云上传地址（域名）
 PUB.urlGetQiniuToken = `${PUB.domain}/api_third_part/get_qiniu_token?scope=dmagic`
@@ -623,7 +623,7 @@ PUB.listCF.info_task = {
       label: "完成度",
       prop: "complete",
       width: 80,
-      slot: "slot_column_complete",
+      // slot: "slot_column_complete",
       formatter: function (row) {
       if (PUB.dict.complete[row.complete]) {
         return PUB.dict.complete[row.complete].label;
