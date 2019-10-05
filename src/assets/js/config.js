@@ -1,19 +1,12 @@
 import lodash from 'lodash'//导入lodash方法库
-
-
 window.PUB = {}
-
-//PUB.domain = "http://localhost:3000"
-PUB.domain='http://test.dmagic.cn'
+PUB.domain = "http://localhost:3000"
+//PUB.domain='http://test.dmagic.cn'
 // PUB.domain="http://e6234kn.hn3.mofasuidao.cn"//魔法隧道地址
-// PUB.domain="http://120.76.160.41:3000"
-
+//PUB.domain = "http://120.76.160.41:3000"
 PUB.urlUpload = `https://up-z2.qiniup.com`//七牛云上传地址（域名）
 PUB.urlGetQiniuToken = `${PUB.domain}/api_third_part/get_qiniu_token?scope=dmagic`
-
-
 //#region PUB.objDictArr/PUB.dict公共字典对象
-
 PUB.objDictArr = {
   taskType: [
     { value: 1, label: "新需求" },
@@ -49,63 +42,39 @@ PUB.objDictArr = {
     { value: 1, label: "未开始" },//complete==0
     { value: 2, label: "进行中" },//complete>0&&complete>1
     { value: 3, label: "已完成" },//complete>0&&complete>1
-   
   ],
 }
-
 //{"P7": Im,"P5":{ $gte: DataStart,$lte: DataEnd } }
-
-
-
 PUB.dict = {};//公共数据字典对象，里面会有多个子数据字典对象
-
 //for of循环遍历对象，for of不能直接处理对象，本质上是同个Object.keys拼装一个新数组进行辅助
 console.log("Object.keys结果", Object.keys(PUB.objDictArr));
 for (var key of Object.keys(PUB.objDictArr)) {
   console.log(key + ": " + PUB.objDictArr[key]);
-
   PUB.dict[key] = {}
   let arrOpt = PUB.objDictArr[key];
   arrOpt.forEach(itemEach => {//循环：{000数组}
     PUB.dict[key][itemEach.value] = itemEach
   })
-
-
-
 }
-
 console.log("PUB.dict#####", PUB.dict);
 /**
     * @name 获取数据字典值函数
     * @param dictName字典名，value值
     */
-
 PUB.formatterDict = function (dictName, value) {
   return lodash.get(PUB.dict, `${dictName}.${value}.label`);
 }
-
-
-
 //#endregion
-
-
-
-
 PUB.listCF = {}
-
-let arrPageName = ["info_group", "info_file", "info_url", "info_piece", "info_task","info_member","info_relation",]
-
+let arrPageName = ["info_group", "info_file", "info_url", "info_piece", "info_task", "info_member", "info_relation",]
 //页面对应的集合列表类型
-PUB.collectionType={
-  "info_group":"",
-  "info_file":"",
-  "info_url":"",
-  "info_piece":"table",
-  "info_task":"table",
-
+PUB.collectionType = {
+  "info_group": "",
+  "info_file": "",
+  "info_url": "",
+  "info_piece": "table",
+  "info_task": "table",
 }
-
-
 //#region info_relation
 PUB.listCF.info_relation = {
   listIndex: "list_relation", //vuex对应的字段
@@ -113,7 +82,7 @@ PUB.listCF.info_relation = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_relation", //列表接口
     add: "/crossAdd?page=info_relation", //新增接口
@@ -195,7 +164,6 @@ PUB.listCF.info_relation = {
       label: "数据id",
       prop: "dataId",
     },
-
     {
       label: "数据类型",
       prop: "dataType",
@@ -207,10 +175,6 @@ PUB.listCF.info_relation = {
   ]
 };
 //#endregion
-
-
-
-
 //#region info_group
 PUB.listCF.info_group = {
   listIndex: "list_group", //vuex对应的字段
@@ -218,7 +182,7 @@ PUB.listCF.info_group = {
   twoTitle: "基础",
   threeTitle: "分组",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_group", //列表接口
     add: "/crossAdd?page=info_group", //新增接口
@@ -306,6 +270,7 @@ PUB.listCF.info_group = {
         { value: "info_piece", label: "片段" },
         { value: "info_group", label: "组" },
         { value: "info_file", label: "文件" },
+        { value: "info_vedio", label: "视频" },
         { value: "info_url", label: "网址" },
         { value: "info_task", label: "任务" }
       ]
@@ -321,11 +286,9 @@ PUB.listCF.info_group = {
       type: "textarea",
       slot: "slot_form_item_arrid"
     },
-
   ]
 };
 //#endregion
-
 //#region info_file
 PUB.listCF.info_file = {
   listIndex: "list_file", //vuex对应的字段
@@ -333,7 +296,7 @@ PUB.listCF.info_file = {
   twoTitle: "基础",
   threeTitle: "文件",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_file", //列表接口
     add: "/crossAdd?page=info_file", //新增接口
@@ -398,7 +361,6 @@ PUB.listCF.info_file = {
       prop: "name",
       type: "input"
     },
- 
     {
       label: "说明",
       prop: "desc",
@@ -412,9 +374,88 @@ PUB.listCF.info_file = {
   ]
 };
 //#endregion
-
-
-
+//#region info_vedio
+PUB.listCF.info_vedio = {
+  listIndex: "list_vedio", //vuex对应的字段
+  focusMenu: true, //进行菜单聚焦
+  twoTitle: "基础",
+  threeTitle: "文件",
+  flag: true,
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
+  url: {
+    list: "/crossList?page=info_vedio", //列表接口
+    add: "/crossAdd?page=info_vedio", //新增接口
+    modify: "/crossModify?page=info_vedio", //修改接口
+    detail: "/crossDetail?page=info_vedio", //详情接口
+    delete: "/crossDelete?page=info_vedio" //删除接口
+  },
+  //-------列配置数组-------
+  columns: [
+    {
+      label: "编号",
+      prop: "P1",
+      width: 70
+    },
+    {
+      label: "标题",
+      prop: "name",
+      width: 320
+    },
+    {
+      label: "说明",
+      prop: "desc",
+      width: 250
+    }
+  ],
+  //-------筛选表单字段数组-------
+  searchFormItems: [
+    {
+      label: "编号",
+      prop: "P1",
+      type: "input"
+    },
+    {
+      label: "标题",
+      prop: "name",
+      type: "input_find_vague"
+    }
+  ],
+  //-------详情字段数组-------
+  detailItems: [
+    {
+      label: "编号",
+      prop: "P1"
+    },
+    {
+      label: "标题",
+      prop: "name"
+    },
+    
+    {
+      label: "视频上传",
+      prop: "url",
+    }
+  ],
+  //-------新增、修改表单字段数组-------
+  formItems: [
+    {
+      label: "标题",
+      prop: "name",
+      type: "input"
+    },
+    {
+      label: "说明",
+      prop: "desc",
+      type: "html"
+    },
+    {
+      label: "文件上传",
+      prop: "url",
+      type: "upload"
+    }
+  ]
+};
+//#endregion
 //#region info_url
 PUB.listCF.info_url = {
   listIndex: "list_url", //vuex对应的字段
@@ -422,7 +463,7 @@ PUB.listCF.info_url = {
   twoTitle: "基础",
   threeTitle: "网址",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_url", //列表接口
     add: "/crossAdd?page=info_url", //新增接口
@@ -492,9 +533,6 @@ PUB.listCF.info_url = {
   ]
 };
 //#endregion
-
-
-
 //#region info_piece
 PUB.listCF.info_piece = {
   listIndex: "list_piece", //vuex对应的字段
@@ -502,7 +540,7 @@ PUB.listCF.info_piece = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_piece", //列表接口
     add: "/crossAdd?page=info_piece", //新增接口
@@ -549,7 +587,7 @@ PUB.listCF.info_piece = {
     {
       label: "内容",
       prop: "content",
-      type: "html"
+      type: "htmlJson"
     }
   ],
   //-------新增、修改表单字段数组-------
@@ -572,8 +610,6 @@ PUB.listCF.info_piece = {
   ]
 };
 //#endregion
-
-
 //#region info_task
 PUB.listCF.info_task = {
   listIndex: "list_task", //vuex对应的字段
@@ -588,10 +624,12 @@ PUB.listCF.info_task = {
     detail: "/crossDetail?page=info_task", //详情接口
     delete: "/crossDelete?page=info_task" //删除接口
   },
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  deleteFindJson:{//ajax查询参数中需要删除的参数
+    complete2:true//complete2只是作为辅助，提交时要从findJson删除，否则查不到数据
+  },
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   //-------列配置数组-------
   columns: [
-
     {
       label: "编号",
       prop: "P1",
@@ -609,28 +647,23 @@ PUB.listCF.info_task = {
       formatter: function (row) {
         return PUB.formatterDict("taskType", row.taskType);//调用：{获取数据字典值函数}
       }
-
     },
     {
-
       label: "负责人",
       prop: "person",
       width: 75
     },
-    
-
     {
       label: "完成度",
       prop: "complete",
       width: 80,
-      // slot: "slot_column_complete",
-      formatter: function (row) {
-      if (PUB.dict.complete[row.complete]) {
-        return PUB.dict.complete[row.complete].label;
-      }
-      }
+      slot: "slot_column_complete",
+      // formatter: function (row) {
+      //   if (PUB.dict.complete[row.complete]) {
+      //     return PUB.dict.complete[row.complete].label;
+      //   }
+      // }
     },
-
     {
       label: "预耗时",
       prop: "predictTime",
@@ -642,7 +675,6 @@ PUB.listCF.info_task = {
       width: 80
     },
     {
-
       label: "难度",
       prop: "difficulty",
       width: 65,
@@ -650,7 +682,6 @@ PUB.listCF.info_task = {
         return PUB.formatterDict("difficulty", row.difficulty);//调用：{获取数据字典值函数}
       }
     },
-
     {
       label: "优先级",
       prop: "prior",
@@ -660,22 +691,19 @@ PUB.listCF.info_task = {
       }
     },
   ],
-   //-------筛选表单监听器-------
+  //-------筛选表单监听器-------
   cfSearchForm: {
     watch: {
-      a:124,
-      b:function(){},
       //传入监听器
-      complete2:function(newVal, oldVal) {
-  
+      complete2: function (newVal, oldVal) {
         console.log("complete2变动");
-        let dict={
+        let dict = {
           1: { "$eq": 0 },
           2: { "$gt": 0, "$lt": 1 },
           3: { "$eq": 1 }
         }
         this.value.complete = dict[newVal];
-       delete this.value.complete2;//*** */移除掉，否则会影响查询结果
+        // delete this.value.complete2;//*** */移除掉，否则会影响查询结果
       }
     }
   },
@@ -696,10 +724,9 @@ PUB.listCF.info_task = {
       prop: "prior",
       type: "select",
       options: PUB.objDictArr.prior,
-      multiple:true,//多选
+      multiple: true,//多选
     },
     {
-
       label: "难度",
       prop: "difficulty",
       type: "select",
@@ -716,9 +743,7 @@ PUB.listCF.info_task = {
     //   prop: "complete",
     //   type: "select",
     //   multiple:true,//多选
-
     //   options: PUB.objDictArr.complete
-
     // },
     {
       label: "完成情况",
@@ -726,7 +751,6 @@ PUB.listCF.info_task = {
       type: "select",
       // multiple:true,//多选
       options: PUB.objDictArr.complete2
-
     },
     {
       label: "负责人",
@@ -757,11 +781,9 @@ PUB.listCF.info_task = {
       },
     },
     {
-
       label: "负责人",
       prop: "person",
     },
-
     {
       label: "完成度",
       prop: "complete",
@@ -769,7 +791,6 @@ PUB.listCF.info_task = {
         return PUB.formatterDict("complete", row.complete);//调用：{获取数据字典值函数}
       },
     },
-
     {
       label: "预耗时",
       prop: "predictTime",
@@ -777,17 +798,14 @@ PUB.listCF.info_task = {
     {
       label: "实耗时",
       prop: "actualTime",
-
     },
     {
-
       label: "难度",
       prop: "difficulty",
       formatter: function (row) {
         return PUB.formatterDict("difficulty", row.difficulty);//调用：{获取数据字典值函数}
       },
     },
-
     {
       label: "优先级",
       prop: "prior",
@@ -803,7 +821,6 @@ PUB.listCF.info_task = {
   ],
   //-------新增、修改表单字段数组-------
   formItems: [
-
     {
       label: "",
       // prop: "extend",
@@ -816,7 +833,6 @@ PUB.listCF.info_task = {
             prop: "name",
             type: "input"
           },
-      
           {
             label: "类型",
             prop: "taskType",
@@ -825,7 +841,6 @@ PUB.listCF.info_task = {
             options: PUB.objDictArr.taskType
           },
           // {
-      
           //   label: "负责人",
           //   prop: "person",
           //   type: "input"
@@ -846,9 +861,7 @@ PUB.listCF.info_task = {
             type: "slider",
             default: 0,
             options: PUB.objDictArr.complete
-      
           },
-      
           {
             label: "预估耗时",
             prop: "predictTime",
@@ -860,13 +873,11 @@ PUB.listCF.info_task = {
             type: "input"
           },
           {
-      
             label: "难度",
             prop: "difficulty",
             type: "radio",
             options: PUB.objDictArr.difficulty
           },
-      
           {
             label: "优先级",
             prop: "prior",
@@ -876,7 +887,6 @@ PUB.listCF.info_task = {
         ]
       }
     },
-    
     {
       label: "内容",
       prop: "content",
@@ -885,9 +895,6 @@ PUB.listCF.info_task = {
   ]
 };
 //#endregion
-
-
-
 //#region info_member
 PUB.listCF.info_member = {
   listIndex: "list_piece", //vuex对应的字段
@@ -895,7 +902,7 @@ PUB.listCF.info_member = {
   twoTitle: "基础",
   threeTitle: "片段",
   flag: true,
-  objParamAddon:{},//附加参数-----这里一定要加上，否则监听不到
+  objParamAddon: {},//附加参数-----这里一定要加上，否则监听不到
   url: {
     list: "/crossList?page=info_member", //列表接口
     add: "/crossAdd?page=info_member", //新增接口
@@ -949,13 +956,13 @@ PUB.listCF.info_member = {
       label: "角色",
       prop: "role",
       width: 120,
-      formatter: (rowData)=>{
+      formatter: (rowData) => {
         switch (rowData.role) {
           case 1:
             return "超级管理员"
             break;
           case 2:
-             return "普通律师会员"
+            return "普通律师会员"
             break;
           default:
             return "无"
@@ -998,7 +1005,7 @@ PUB.listCF.info_member = {
       prop: "name",
       width: 100
     },
-     {
+    {
       label: "密码",
       prop: "password",
       width: 120
@@ -1017,7 +1024,7 @@ PUB.listCF.info_member = {
       label: "发送消息数量",
       prop: "msgCount",
       width: 65
-    },       
+    },
     {
       label: "备注数量",
       prop: "remarkCount",
@@ -1027,39 +1034,39 @@ PUB.listCF.info_member = {
       label: "角色",
       prop: "role",
       width: 120,
-      formatter: (rowData)=>{
+      formatter: (rowData) => {
         switch (rowData.role) {
           case 1:
             return "超级管理员"
             break;
           case 2:
-             return "普通律师会员"
+            return "普通律师会员"
             break;
           default:
             return "无"
             break;
         }
       }
-    },  
+    },
   ],
   //-------新增、修改表单字段数组-------
   formItems: [
-   {
+    {
       label: "用户名",
       prop: "user",
-      type:"input",
+      type: "input",
       rules: [{ required: true, message: "用户名不能为空" }]
     },
     {
       label: "姓名",
       prop: "name",
-      type:"input",
+      type: "input",
       rules: [{ required: true, message: "姓名不能为空" }]
     },
     {
       label: "密码",
       prop: "password",
-      type:"input",
+      type: "input",
       rules: [{ required: true, message: "密码不能为空" }]
     },
     {
@@ -1071,24 +1078,14 @@ PUB.listCF.info_member = {
         { label: "普通律师会员", value: 2 }
       ],
       rules: [{ required: true, message: "角色未选" }]
-    }, 
+    },
   ]
-
 };
 //#endregion
-
-
-
-
-
 //#region 批量拼装简化版的列表配置，用于collection
-
-
-
-
 arrPageName.forEach(page => {//循环：{页面数组}
-  PUB.listCF[page].pageSize=100;//每页显示100条
-
+  PUB.listCF[page].pageSize = 100;//每页显示100条
+  PUB.listCF[page].findJsonDefault = {};//默认查询参数
   let keySimple = `${page}_simple`;
   PUB.listCF[keySimple] = lodash.cloneDeep(PUB.listCF[page])//深拷贝常规版配置
   Object.assign(PUB.listCF[keySimple], {
@@ -1098,18 +1095,14 @@ arrPageName.forEach(page => {//循环：{页面数组}
   });//合并对象
   //lodash删除查询表单的编号查询数据
   lodash.remove(PUB.listCF[keySimple].searchFormItems, (item) => item.prop == "P1");
-
 })
-
-
 //#region info_relation_simple处理
-PUB.listCF.info_relation_simple.columns= [
+PUB.listCF.info_relation_simple.columns = [
   {
     label: "编号",
     prop: "P1",
     width: 70
   },
-  
   {
     label: "数据id",
     prop: "dataId",
@@ -1137,20 +1130,6 @@ PUB.listCF.info_relation_simple.columns= [
     slot: "slot_column_operate"
   },
 ]
-
-
-
-
-
 //#endregion
-
-
-
-
-
-
-
 //#endregion
-
-
 export default {}

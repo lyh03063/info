@@ -73,6 +73,7 @@ export default {
             { index: "list_group", route: "/list_group", title: "分组" },
             { index: "list_url", route: "/list_url", title: "网址" },
             { index: "list_file", route: "/list_file", title: "文件" },
+             { index: "list_vedio", route: "/list_vedio", title: "视频" },
             { index: "list_member", route: "/list_member", title: "会员" },
             { index: "list_relation", route: "/list_relation", title: "关系表" },
           ]

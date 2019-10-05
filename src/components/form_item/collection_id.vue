@@ -17,6 +17,7 @@
       <dm_debug_item v-model="dataList" text="dataList" />
       <dm_debug_item v-model="valueNeed" text="valueNeed" />
       <dm_debug_item v-model="dataType" text="数据类型" />
+      <dm_debug_item v-model="listType" text="listType" />
     </dm_debug_list>
     <!-- v-if="valueNeed && valueNeed.length"这个条件在空数组添加数据时报错 -->
     <div class>
@@ -96,6 +97,12 @@
           target="_blank"
           v-else-if="dataType=='info_file'"
         >{{doc.name}}</a>
+        <!--视频 :href="$lodash.get(doc, 'url[0].url')"-->
+        <a
+         href="javascript:;"
+         @click="isShowVedioDialog=true"
+          v-else-if="dataType=='info_vedio'"
+        >{{doc.name}}</a>
       </div>
     </div>
     <!--新增数据弹窗-->
@@ -144,17 +151,32 @@
         <el-button type="primary" @click="selectData">确定</el-button>
       </div>
     </el-dialog>
+
+
+
+    <!--视频弹窗-->
+    <el-dialog custom-class="n-el-dialog" width="840px" height="470px" title="视频播放"   :close-on-press-escape="false" :close-on-click-modal="false"  :append-to-body="true"  v-bind:visible.sync="isShowVedioDialog" v-if="isShowVedioDialog">
+  
+ <vedio_player class="" >
+   
+
+ </vedio_player>
+  </el-dialog>
   </div>
 </template>
 
 <script>
+import vedio_player from "@/components/common/vedio_player.vue";
 // action="https://jsonplaceholder.typicode.com/posts/"
 export default {
+  name:"collection_id",
+  components:{vedio_player},
   mixins: [MIX.form_item], //混入
   //groupId不传的话，不启动独立的数据保存
   props: ["dataType", "groupId", "listType"],
   data() {
     return {
+      isShowVedioDialog:false,//是否显示视频弹窗
       //深拷贝
       // var objB =lodash.cloneDeep(objA);
       cfDataList: util.deepCopy(PUB.listCF[this.dataType + "_simple"]),
@@ -250,7 +272,7 @@ export default {
     },
     selectData: function() {
       //获取选中的数据，此处可优化，使用selection-change事件
-      let selection = this.$refs.listData.$refs.multipleTable.selection;
+      let selection = this.$refs.listData.$refs.table.selection;
 
       selection = util.deepCopy(selection);
       if (!selection.length) return (this.showDialogList = false);
@@ -323,17 +345,24 @@ export default {
       //Q1:表格形式
       if (this.listType == "table") {
         //任务列表配置添加默认查询条件****
-        this.cfDataList.findJsonDefault = { P1: { $in: arrId } };
+
+     
+        this.$set(this.cfDataList.findJsonDefault, "P1", { $in: arrId }); //***/强制更新属性
+     
         this.$set(this.cfDataList.objParamAddon, "sortByArrId", arrId); //***/强制更新属性
         //如果{主列表}存在
         if (this.$refs.listDataMain) {
-          Object.assign(
-            this.$refs.listDataMain.objParam.findJson,
-            this.cfDataList.findJsonDefault
-          ); //合并对象
+          console.log(
+            "this.$refs.listDataMain.objParam.findJson:",
+            this.$refs.listDataMain.objParam.findJson
+          );
+          //以下这句会导致修改后筛选条件丢失，findJsonDefault会出现很多undefined的属性值
+          // Object.assign(
+          //   this.$refs.listDataMain.objParam.findJson,
+          //   this.cfDataList.findJsonDefault
+          // ); //合并对象
 
-          //更新objParam.sortByArrId
-          // this.$refs.listDataMain.objParam.sortByArrId = arrId; //*** */
+          this.$refs.listDataMain.objParam.findJson.P1=this.cfDataList.findJsonDefault.P1
 
           this.$refs.listDataMain.getDataList(); //更新列表
         }
