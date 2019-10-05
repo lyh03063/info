@@ -100,7 +100,7 @@
         <!--视频 :href="$lodash.get(doc, 'url[0].url')"-->
         <a
          href="javascript:;"
-         @click="isShowVedioDialog=true"
+         @click="docCurr=doc;isShowVedioDialog=true"
           v-else-if="dataType=='info_vedio'"
         >{{doc.name}}</a>
       </div>
@@ -157,10 +157,7 @@
     <!--视频弹窗-->
     <el-dialog custom-class="n-el-dialog" width="840px" height="470px" title="视频播放"   :close-on-press-escape="false" :close-on-click-modal="false"  :append-to-body="true"  v-bind:visible.sync="isShowVedioDialog" v-if="isShowVedioDialog">
   
- <vedio_player class="" >
-   
-
- </vedio_player>
+ <vedio_player :vedioDoc="docCurr" > </vedio_player>
   </el-dialog>
   </div>
 </template>
@@ -176,6 +173,7 @@ export default {
   props: ["dataType", "groupId", "listType"],
   data() {
     return {
+      docCurr:null,
       isShowVedioDialog:false,//是否显示视频弹窗
       //深拷贝
       // var objB =lodash.cloneDeep(objA);

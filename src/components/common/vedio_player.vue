@@ -14,8 +14,13 @@ import { videoPlayer } from "vue-video-player";
 import "video.js/dist/video-js.css";
 
 export default {
+  name:"vedio_player",
   components: {
     videoPlayer
+  },
+  props:{
+    vedioDoc:{}
+
   },
   data() {
     return {
@@ -31,7 +36,8 @@ export default {
         sources: [
           {
             type: "video/mp4",
-            src: "http://qn-dmagic.dmagic.cn/201910042218532626_唐球小程序视频1.mp4" //视频url地址
+            src: lodash.get(this.vedioDoc, `url[0].url`) ,//视频url地址
+            // src: "http://qn-dmagic.dmagic.cn/201910042218532626_唐球小程序视频1.mp4" //视频url地址
           }
         ],
         poster: "../../static/image/thumb_1_1380_460_20181009043014983386.jpg", //你的封面地址
