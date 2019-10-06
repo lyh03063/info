@@ -35,6 +35,8 @@ import list_article_category from "@/page/list_article_category";
 import list_article from "@/page/list_article";
 import dynamic_form_demo from "@/page/dynamic_form_demo";
 import demo_common from "@/demo/common.vue";
+import vedio_player_list from "@/components/common/vedio_player_list.vue";
+
 // window.util=util;
 // 3. 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
@@ -51,6 +53,9 @@ const router = new VueRouter({
     },
     {
       path: '/group_detail2', component: group_detail2,
+    },
+    {
+      path: '/vedio_player_list', component: vedio_player_list,
     },
     {
       path: '/group_detail3', component: group_detail3, children: [//子路由
