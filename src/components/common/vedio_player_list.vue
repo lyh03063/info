@@ -15,10 +15,10 @@
       <div class="video-player-title">播放列表</div>
       <div class='video-list-main'>
         <div v-for="(item,index) in  vedioList" :key="index" class="video-list-msg" @click="changeVideo(item,index)">
-          <div class="video-list-img">
+          <!-- <div class="video-list-img">
             <img src="https://puui.qpic.cn/vpic/0/q00324vx0xh_160_90_3.jpg/0" width="100%" height="100%">
-          </div>
-          <div class="video-list-title" :class="checkedIndex==index?'active':''">{{item.name}}</div>
+          </div> -->
+          <div class="video-list-title" :class="checkedIndex==index?'active':''">{{index+1}}，{{item.name}}</div>
           
         </div>
       </div>
@@ -151,16 +151,18 @@ body, html {
 }
 .video-list-msg{
   color: white;
-  height: 100px;
+  /* height: 100px; */
   display: flex;
   cursor: pointer;
+  border-bottom: 1px #999 dashed;
+
 }
 .video-list-img{
   padding: 10px;
   flex:0 0 50%
 }
 .video-list-title{
-  flex: 0 0 50%;
+  flex: 0 0 100%;
   padding: 10px 10px;
 }
 .active{

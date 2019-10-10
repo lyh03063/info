@@ -99,8 +99,8 @@
         >{{doc.name}}</a>
         <!--视频 :href="$lodash.get(doc, 'url[0].url')"-->
         <a
-         href="javascript:;"
-         @click="docCurr=doc;isShowVedioDialog=true"
+          href="javascript:;"
+          @click="docCurr=doc;isShowVedioDialog=true"
           v-else-if="dataType=='info_vedio'"
         >{{doc.name}}</a>
       </div>
@@ -152,13 +152,20 @@
       </div>
     </el-dialog>
 
-
-
     <!--视频弹窗-->
-    <el-dialog custom-class="n-el-dialog" width="840px" height="470px" title="视频播放"   :close-on-press-escape="false" :close-on-click-modal="false"  :append-to-body="true"  v-bind:visible.sync="isShowVedioDialog" v-if="isShowVedioDialog">
-  
- <vedio_player :vedioDoc="docCurr" > </vedio_player>
-  </el-dialog>
+    <el-dialog
+      custom-class="n-el-dialog"
+      width="840px"
+      height="470px"
+      title="视频播放"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+      :append-to-body="true"
+      v-bind:visible.sync="isShowVedioDialog"
+      v-if="isShowVedioDialog"
+    >
+      <vedio_player :vedioDoc="docCurr"></vedio_player>
+    </el-dialog>
   </div>
 </template>
 
@@ -166,15 +173,15 @@
 import vedio_player from "@/components/common/vedio_player.vue";
 // action="https://jsonplaceholder.typicode.com/posts/"
 export default {
-  name:"collection_id",
-  components:{vedio_player},
+  name: "collection_id",
+  components: { vedio_player },
   mixins: [MIX.form_item], //混入
   //groupId不传的话，不启动独立的数据保存
   props: ["dataType", "groupId", "listType"],
   data() {
     return {
-      docCurr:null,
-      isShowVedioDialog:false,//是否显示视频弹窗
+      docCurr: null,
+      isShowVedioDialog: false, //是否显示视频弹窗
       //深拷贝
       // var objB =lodash.cloneDeep(objA);
       cfDataList: util.deepCopy(PUB.listCF[this.dataType + "_simple"]),
@@ -337,17 +344,22 @@ export default {
      * @name ajax获取对应列表数据函数
      */
     ajaxGetList: async function() {
-      console.log("ajaxGetList####");
+      console.log("ajaxGetList####123");
       if (!this.valueNeed) return;
       let arrId = this.valueNeed.map(doc => doc.id);
       //Q1:表格形式
       if (this.listType == "table") {
         //任务列表配置添加默认查询条件****
 
-     
         this.$set(this.cfDataList.findJsonDefault, "P1", { $in: arrId }); //***/强制更新属性
-     
+        console.log("arrId:", arrId);
         this.$set(this.cfDataList.objParamAddon, "sortByArrId", arrId); //***/强制更新属性
+
+        console.log(
+          "this.cfDataList.objParamAddon:",
+          this.cfDataList.objParamAddon
+        );
+        console.log(this.cfDataList.objParamAddon);
         //如果{主列表}存在
         if (this.$refs.listDataMain) {
           console.log(
@@ -360,7 +372,8 @@ export default {
           //   this.cfDataList.findJsonDefault
           // ); //合并对象
 
-          this.$refs.listDataMain.objParam.findJson.P1=this.cfDataList.findJsonDefault.P1
+          this.$refs.listDataMain.objParam.findJson.P1 = this.cfDataList.findJsonDefault.P1;
+          await util.timeout(100); //延迟,不然objParamAddon中sortByArrId参数可能来不及响应
 
           this.$refs.listDataMain.getDataList(); //更新列表
         }
