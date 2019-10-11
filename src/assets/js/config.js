@@ -369,7 +369,11 @@ PUB.listCF.info_file = {
     {
       label: "文件上传",
       prop: "url",
-      type: "upload"
+      type: "upload",
+      uploadConfig: {
+        limit: 1,
+        listType: "text"
+      }
     }
   ]
 };
@@ -861,16 +865,23 @@ PUB.listCF.info_task = {
             type: "slider",
             default: 0,
             options: PUB.objDictArr.complete
+            // type: "number",
+            // min: 0,
+            // max: 1,
+            // frequencyOptions:[{label:"10%",value:0.1},{label:"20%",value:0.2},{label:"130%",value:0.3},{label:"40%",value:0.4},{label:"50%",value:0.5},{label:"60%",value:0.6},{label:"70%",value:0.7},{label:"80%",value:0.8},{label:"90%",value:0.9},{label:"10%",value:0.1},{label:"100%",value:1}]
           },
           {
             label: "预估耗时",
             prop: "predictTime",
-            type: "input"
+            type: "text",
+            frequency:{options:[{value:0.3},{value:0.5},{value:1},{value:2},{value:3},{value:4},{value:5},{value:8},{value:10}]}
           },
           {
             label: "实耗时",
             prop: "actualTime",
-            type: "input"
+            type: "text",
+         
+            frequency:{options:[{value:0.3},{value:0.5},{value:1},{value:2},{value:3},{value:4},{value:5},{value:8},{value:10}]}
           },
           {
             label: "难度",
