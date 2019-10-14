@@ -5,7 +5,7 @@
       <dm_debug_item v-model="groupId" text="groupId" />
     </dm_debug_list>
 <div class="PL10 PR10" >
-   <list_group_data class :group-id="groupId" :data-type="groupDoc.dataType"></list_group_data>
+   <list_group_data class :group-id="groupId" :data-type="groupDoc.dataType" v-if="groupDoc.dataType"></list_group_data>
 </div>
    
   </div>
@@ -21,7 +21,7 @@ export default {
       ready: false,
       breadcrumblist: [],
       activeNames: ["0"], //折叠面板的激活name数组
-      groupId: this.$route.query.groupId, //分组Id
+      groupId: Number(this.$route.query.groupId), //分组Id
       groupDoc: {}, //分组doc
       arrId: null, //id数组
       dataList: null, //id数组

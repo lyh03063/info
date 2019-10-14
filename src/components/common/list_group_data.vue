@@ -84,7 +84,7 @@ export default {
       showDialogModify: false, //是否显示修改数据弹窗
       /****************************新增/修改数据相关数据-END****************************/
 
-      cfList: lodash.cloneDeep(PUB.listCF.info_relation_simple) //主列表配置
+      cfList: lodash.cloneDeep(PUB.listCF.group_data_list) //主列表配置
     };
   },
 
@@ -191,11 +191,13 @@ export default {
   },
 
   created() {
-    this.cfList.findJsonDefault = { groupId: this.groupId };
+    // this.cfList.findJsonDefault = { groupId: this.groupId };
     this.cfList.sortJsonDefault = { sort: -1 };
 
-     this.cfList.searchFormItems = PUB.listCF[`${this.dataType}`].searchFormItems;
-
+console.log("this.dataType:", this.dataType);
+  this.cfList.searchFormItems = PUB.listCF[`${this.dataType}`].searchFormItems;
+  //拼接目标表的数据列
+ this.cfList.columns = this.cfList.columns.concat(PUB.listCF[`${this.dataType}`].columns) ;
 //配置动态数据字典
     this.cfList.dynamicDict = [
       {
