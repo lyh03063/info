@@ -178,9 +178,6 @@ export default {
       });
       this.$message.success("修改成功");
 
-    
-
-
       //如果{主列表}存在
       if (this.$refs.listDataMain) {
         this.$refs.listDataMain.getDataList(); //更新列表
